@@ -31,12 +31,12 @@ const kpiConfig = [
   { icon: '🖼️', label: '文件总数', key: 'fileTotal', href: '/admin/files',    color: '#5E5CE6' },
 ];
 
-// 快捷操作按钮配置：图标、标签、跳转链接、主题色
+// 快捷操作按钮配置：图标、标签、跳转链接、主题色及对应 rgba 背景/边框色
 const quickActions = [
-  { icon: '✏️', label: '编辑内容', href: '/admin/editor',   color: '#0A84FF' },
-  { icon: '📤', label: '上传文件', href: '/admin/files',    color: '#30D158' },
-  { icon: '🌐', label: '翻译管理', href: '/admin/i18n',     color: '#5E5CE6' },
-  { icon: '⚙️', label: '系统设置', href: '/admin/settings', color: '#FF9F0A' },
+  { icon: '✏️', label: '编辑内容', href: '/admin/editor',   bgColor: 'rgba(10,132,255,0.10)',  borderColor: 'rgba(10,132,255,0.19)'  },
+  { icon: '📤', label: '上传文件', href: '/admin/files',    bgColor: 'rgba(48,209,88,0.10)',   borderColor: 'rgba(48,209,88,0.19)'   },
+  { icon: '🌐', label: '翻译管理', href: '/admin/i18n',     bgColor: 'rgba(94,92,230,0.10)',   borderColor: 'rgba(94,92,230,0.19)'   },
+  { icon: '⚙️', label: '系统设置', href: '/admin/settings', bgColor: 'rgba(255,159,10,0.10)',  borderColor: 'rgba(255,159,10,0.19)'  },
 ];
 
 // 最新留言的精简类型（仅查询展示所需字段）
@@ -248,9 +248,9 @@ export default async function DashboardPage() {
                   gap: '8px',
                   padding: '16px 8px',
                   borderRadius: '12px',
-                  // 用模块色调的超低不透明度渐变背景，形成彩色区分
-                  background: `linear-gradient(135deg,${action.color}1a,${action.color}0d)`,
-                  border: `1px solid ${action.color}30`,
+                  // 用模块色调的低不透明度背景与边框，形成彩色区分
+                  background: action.bgColor,
+                  border: `1px solid ${action.borderColor}`,
                   textDecoration: 'none',
                   color: '#F5F5F7',
                   fontSize: '12px',

@@ -29,27 +29,13 @@ export default function LogoutButton() {
     <button
       onClick={handleLogout}
       title="退出登录"
+      // hover:bg-[rgba(255,69,58,0.15)]：悬浮时红色背景，给用户退出的视觉反馈
+      className="flex items-center justify-center rounded-[10px] border-none bg-transparent text-lg transition-colors duration-200 hover:bg-[rgba(255,69,58,0.15)]"
       style={{
         width: '36px',
         height: '36px',
-        borderRadius: '10px',
-        border: 'none',
-        background: 'transparent',
         cursor: 'pointer',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: '18px',
-        // 使用 CSS transition 实现悬浮效果（纯 inline style 无法使用 :hover，改用 onMouseEnter/Leave）
-        transition: 'background 0.2s',
         flexShrink: 0,
-      }}
-      onMouseEnter={(e) => {
-        // 悬浮时显示红色背景，给用户视觉反馈
-        (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,69,58,0.15)';
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
       }}
     >
       🚪
