@@ -1,6 +1,8 @@
 # BRAND CMS - 品牌官网内容管理系统
 
-> 基于 Next.js 14 + Supabase + TypeScript 的现代化 CMS
+<a href="https://vercel.com/new/clone?repository-url=https://github.com/zenwasamnew-hue/brand-cms"><img src="https://vercel.com/button" alt="Deploy with Vercel"/></a>
+
+> 基于 Next.js 14 + TypeScript + Tailwind CSS 的现代化品牌 CMS，无需 Supabase 即可部署（演示模式）
 
 ## 📦 技术栈
 
@@ -12,34 +14,33 @@
 | 后端 | Supabase | - | PostgreSQL + Auth + Storage |
 | 部署 | Vercel | - | 海外节点 |
 
-## 🚀 本地启动（5 分钟）
+## 🚀 本地启动（2 分钟）
 
 ```bash
 # 1. 安装依赖
 npm install
 
-# 2. 复制环境变量模板
-cp .env.local.example .env.local
-
-# 3. 填写 .env.local 中的 Supabase 配置（见下方）
-
-# 4. 启动开发服务器
+# 2. 启动开发服务器
 npm run dev
 
-# 5. 浏览器打开 http://localhost:3000
+# 3. 浏览器打开 http://localhost:3000
+#    → 自动跳转到 /login，任意邮箱 + 任意密码即可登录（演示模式）
 ```
 
-## 🔑 环境变量配置
+## ☁️ 一键部署到 Vercel
 
-打开 `.env.local`，填入你的 Supabase 项目信息：
+点击顶部 **Deploy with Vercel** 按钮，或手动操作：
 
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://你的project-id.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...你的anon-key
-SUPABASE_SERVICE_ROLE_KEY=eyJ...你的service-role-key（机密）
-```
+1. 进入 https://vercel.com/new
+2. Import `zenwasamnew-hue/brand-cms`
+3. 无需配置任何环境变量
+4. 点击 **Deploy**，约 1 分钟后获得 `*.vercel.app` 域名
 
-获取位置：Supabase 控制台 → Project Settings → API
+> 演示模式下无需 Supabase，任意邮箱 + 任意密码登录。
+
+## 🔑 演示账号
+
+**任意邮箱 + 任意密码** 均可登录（前端 mock，无真实鉴权）。
 
 ## 📁 项目结构
 
