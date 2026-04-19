@@ -1,6 +1,8 @@
 # BRAND CMS - 品牌官网内容管理系统
 
-> 基于 Next.js 14 + Supabase + TypeScript 的现代化 CMS
+> 基于 Next.js 14 + Supabase + TypeScript 的现代化 CMS，6 套主题 + 4 种 UI 语言
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/zenwasamnew-hue/brand-cms)
 
 ## 📦 技术栈
 
