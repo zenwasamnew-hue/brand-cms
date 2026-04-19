@@ -124,7 +124,11 @@ export default function EditorPage() {
 
     const savedData = localStorage.getItem('editor-draft');
     if (savedData) {
-      try { setData(JSON.parse(savedData)); } catch (err) { console.error('Failed to parse editor draft, resetting to defaults:', err); }
+      try {
+        setData(JSON.parse(savedData));
+      } catch {
+        localStorage.removeItem('editor-draft');
+      }
     }
     return () => window.removeEventListener('admin-lang-change', handler);
   }, []);
