@@ -204,7 +204,11 @@ export default function HomePage() {
           <div style={{ position:'absolute', inset:0, pointerEvents:'none', background:'radial-gradient(ellipse at 20% 40%,rgba(10,132,255,0.15),transparent 50%),radial-gradient(ellipse at 80% 60%,rgba(94,92,230,0.15),transparent 50%)' }} />
           <div style={{ position:'relative', maxWidth:'800px' }}>
             <div style={styles.pill}>{heroContent.pill || 'Next-gen Brand Management'}</div>
-            <h1 style={{ fontSize:'clamp(36px,8vw,80px)', fontWeight:800, lineHeight:1.1, marginBottom:'24px', background:'var(--grad,linear-gradient(135deg,#0A84FF,#5E5CE6))', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }} dangerouslySetInnerHTML={{ __html: heroContent.title||siteName }} />
+            <h1 style={{ fontSize:'clamp(36px,8vw,80px)', fontWeight:800, lineHeight:1.1, marginBottom:'24px', background:'var(--grad,linear-gradient(135deg,#0A84FF,#5E5CE6))', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
+              {(heroContent.title || siteName).split('<br>').map((part, i, arr) => (
+                <span key={i}>{part}{i < arr.length - 1 && <br />}</span>
+              ))}
+            </h1>
             <p style={{ ...styles.muted, maxWidth:'600px', margin:'0 auto 40px' }}>{heroContent.subtitle || siteDesc}</p>
             <div style={{ display:'flex', gap:'12px', justifyContent:'center', flexWrap:'wrap' }}>
               <a href="#contact" className="btn-primary" style={{ padding:'14px 32px', fontSize:'15px', textDecoration:'none' }}>{heroContent.cta_primary || 'Get Started'}</a>
