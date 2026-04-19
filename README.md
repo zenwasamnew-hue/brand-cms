@@ -1,78 +1,101 @@
-# BRAND CMS - 品牌官网内容管理系统
+# BRAND CMS
 
-> 基于 Next.js 14 + Supabase + TypeScript 的现代化 CMS
+A full-stack brand website CMS built with **Next.js 14**, **TypeScript**, **Tailwind CSS**, and **Supabase**.
 
-## 📦 技术栈
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/zenwasamnew-hue/brand-cms)
 
-| 类别 | 技术 | 版本 | 说明 |
-|------|------|------|------|
-| 前端框架 | Next.js | 14 | App Router + Server Components |
-| 语言 | TypeScript | 5.x | 类型安全 |
-| 样式 | TailwindCSS | 3.x | 原子化 CSS |
-| 后端 | Supabase | - | PostgreSQL + Auth + Storage |
-| 部署 | Vercel | - | 海外节点 |
+---
 
-## 🚀 本地启动（5 分钟）
+## Features
+
+- 🎨 **6 Themes** – Midnight, Silver, Space Gray, Matrix, Sunset, Aurora
+- 🌐 **i18n** – zh / en / ja / ko
+- 📝 **Content Editor** – JSON-based per-module, per-language editing
+- 🧩 **Module Management** – Toggle and reorder frontend sections
+- 💬 **Messages** – Contact form with inbox, status management, and replies
+- 📁 **File Manager** – Upload to Supabase Storage, copy public URLs
+- ⚙️ **Site Settings** – SEO, contact info, ICP
+- 🔐 **Auth** – Supabase Auth with protected admin routes
+
+---
+
+## Quick Start (Local)
 
 ```bash
-# 1. 安装依赖
+git clone https://github.com/zenwasamnew-hue/brand-cms.git
+cd brand-cms
 npm install
-
-# 2. 复制环境变量模板
 cp .env.local.example .env.local
-
-# 3. 填写 .env.local 中的 Supabase 配置（见下方）
-
-# 4. 启动开发服务器
+# Fill in your Supabase credentials in .env.local
 npm run dev
-
-# 5. 浏览器打开 http://localhost:3000
 ```
 
-## 🔑 环境变量配置
+Open [http://localhost:3000](http://localhost:3000) – you'll see the frontend.  
+Admin panel: [http://localhost:3000/admin](http://localhost:3000/admin)
 
-打开 `.env.local`，填入你的 Supabase 项目信息：
+---
+
+## Environment Variables
+
+Copy `.env.local.example` to `.env.local` and fill in:
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=https://你的project-id.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...你的anon-key
-SUPABASE_SERVICE_ROLE_KEY=eyJ...你的service-role-key（机密）
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJxxxxx...
+SUPABASE_SERVICE_ROLE_KEY=eyJxxxxx...   # Keep secret – server-side only
+NEXT_PUBLIC_SITE_URL=https://yourdomain.com
 ```
 
-获取位置：Supabase 控制台 → Project Settings → API
-
-## 📁 项目结构
-
-```
-brand-cms/
-├── src/
-│   ├── app/                  # Next.js App Router 路由
-│   │   ├── admin/            # 后台管理系统
-│   │   ├── (site)/           # 前台官网（待添加）
-│   │   ├── layout.tsx        # 根布局
-│   │   └── globals.css       # 全局样式
-│   └── lib/
-│       ├── supabase/         # Supabase 客户端封装
-│       └── types.ts          # 数据库类型定义
-├── public/                   # 静态资源
-├── docs/                     # 文档
-└── middleware.ts             # 鉴权中间件
-```
-
-## 👥 默认账号
-
-首次部署后，需在 Supabase Auth 后台手动创建第一个超管账号：
-
-1. Supabase 控制台 → Authentication → Users → Add user
-2. 输入邮箱 + 密码
-3. 进入 Table Editor → profiles，把对应用户的 role 改为 `superadmin`
-
-## 📚 给团队的文档
-
-- 项目接管手册：`docs/HANDOFF.md`
-- 数据库 Schema：见 SQL 脚本与 `src/lib/types.ts`
-
-## 📜 License
-
-私有项目，未经授权禁止复制。
 ---
+
+## Supabase Setup
+
+1. Create a new project at [supabase.com](https://supabase.com)
+2. Go to **SQL Editor** and run the migration:
+   ```
+   supabase/migrations/20260419_init.sql
+   ```
+3. Go to **Storage** → create a public bucket named **`files`**
+4. Go to **Authentication → Users → Add user** to create your admin account
+5. Copy the project URL and anon key into `.env.local`
+
+---
+
+## Deploy to Vercel
+
+1. Click the **Deploy** button above  
+2. Set the environment variables in Vercel's dashboard:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `NEXT_PUBLIC_SITE_URL`
+3. Done ✅
+
+---
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── page.tsx              # Frontend (public site)
+│   ├── login/page.tsx        # Login page
+│   ├── admin/
+│   │   ├── layout.tsx        # Sidebar layout
+│   │   ├── page.tsx          # Dashboard
+│   │   ├── editor/           # Content editor
+│   │   ├── modules/          # Module manager
+│   │   ├── messages/         # Inbox
+│   │   ├── files/            # File manager
+│   │   ├── i18n/             # Translations
+│   │   ├── theme/            # Theme switcher
+│   │   └── settings/         # Site settings
+│   └── globals.css           # Global styles + 6 theme vars
+├── lib/
+│   └── supabase/
+│       ├── client.ts         # Browser client
+│       └── server.ts         # Server client
+└── middleware.ts             # Auth protection
+supabase/
+└── migrations/
+    └── 20260419_init.sql     # Full schema + seed data
+```
