@@ -160,3 +160,8 @@ export const i18n = {
 } as const;
 
 export type I18nDict = typeof i18n.zh;
+
+// DeepString replaces all leaf literal string types with `string`,
+// allowing any language variant to be assigned to I18nDict.
+type DeepString<T> = T extends string ? string : { [K in keyof T]: DeepString<T[K]> };
+export type I18nDictLoose = DeepString<typeof i18n.zh>;

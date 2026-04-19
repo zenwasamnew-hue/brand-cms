@@ -1,12 +1,12 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { i18n, type Lang, type I18nDict } from '@/lib/i18n';
+import { i18n, type Lang, type I18nDictLoose } from '@/lib/i18n';
 
 type LangContextType = {
   lang: Lang;
   setLang: (l: Lang) => void;
-  t: I18nDict;
+  t: I18nDictLoose;
 };
 
 const LangContext = createContext<LangContextType>({
@@ -36,7 +36,7 @@ export default function UiLangProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <LangContext.Provider value={{ lang, setLang, t: i18n[lang] as unknown as I18nDict }}>
+    <LangContext.Provider value={{ lang, setLang, t: i18n[lang] }}>
       {children}
     </LangContext.Provider>
   );
