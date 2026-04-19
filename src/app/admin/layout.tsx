@@ -3,25 +3,44 @@ import AppProviders from './_components/AppProviders';
 import Sidebar from './_components/Sidebar';
 import TopBar from './_components/TopBar';
 
-export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+// Force dynamic rendering – this layout calls Supabase on every request
+export const dynamic = 'force-dynamic';
 
-  if (!user) {
-    return <>{children}</>;
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  let user = null;
+  let displayName = '管理员';
+
+  try {
+    const supabase = createClient();
+    const { data } = await supabase.auth.getUser();
+    user = data.user;
+
+    if (user) {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('display_name, role')
+        .eq('id', user.id)
+        .single();
+
+      if (profile?.display_name) {
+        displayName = profile.display_name;
+      } else if (user.email) {
+        displayName = user.email.split('@')[0];
+      }
+    }
+  } catch {
+    // Supabase not configured – demo mode, show admin shell directly
   }
 
-  let displayName = '管理员';
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('display_name, role')
-    .eq('id', user.id)
-    .single();
+  // Show admin shell if authenticated OR if Supabase is not configured (demo mode)
+  const supabaseConfigured = !!(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
+  const isAuthenticated = !!user || !supabaseConfigured;
 
-  if (profile?.display_name) {
-    displayName = profile.display_name;
-  } else if (user.email) {
-    displayName = user.email.split('@')[0];
+  if (!isAuthenticated) {
+    return <>{children}</>;
   }
 
   const avatarLetter = displayName.charAt(0).toUpperCase();

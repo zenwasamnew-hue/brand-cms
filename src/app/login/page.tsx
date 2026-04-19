@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
 
 export default function LoginPage() {
   const [email, setEmail]       = useState('');
@@ -10,14 +9,26 @@ export default function LoginPage() {
   const [loading, setLoading]   = useState(false);
   const [error, setError]       = useState<string | null>(null);
   const router   = useRouter();
-  const supabase = createClient();
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) { setError('登录失败：' + error.message); setLoading(false); return; }
+
+    try {
+      const { createClient } = await import('@/lib/supabase/client');
+      const supabase = createClient();
+      const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
+      if (authError) { setError('登录失败：' + authError.message); setLoading(false); return; }
+    } catch (err) {
+      // Supabase not configured – allow any login in demo mode
+      if (!(err instanceof Error && err.message === 'Supabase not configured')) {
+        setError('登录出错，请重试');
+        setLoading(false);
+        return;
+      }
+    }
+
     router.push('/admin');
     router.refresh();
   }

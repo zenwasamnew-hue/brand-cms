@@ -10,6 +10,14 @@
   --shadow-lg: 0 24px 60px rgba(0,0,0,0.18);
   --shadow-inset: inset 0 1px 0 rgba(255,255,255,0.1);
   --easing: cubic-bezier(0.32, 0.72, 0, 1);
+  /* Default to midnight theme so first paint is always dark */
+  --bg-base: #0a0a0f;
+  --bg-card: rgba(28,28,40,0.85);
+  --border: rgba(255,255,255,0.08);
+  --text-primary: #F5F5F7;
+  --text-secondary: #86868B;
+  --gradient-main: linear-gradient(135deg, #0A84FF 0%, #5E5CE6 100%);
+  --accent: #0A84FF;
 }
 
 * { box-sizing: border-box; }
@@ -17,8 +25,8 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: #000;
-  color: #F5F5F7;
+  background: var(--bg-base, #0a0a0f);
+  color: var(--text-primary, #F5F5F7);
   font-family: 'SF Pro Text', -apple-system, 'Inter', sans-serif;
   letter-spacing: -0.011em;
   -webkit-font-smoothing: antialiased;
@@ -31,9 +39,9 @@ html, body {
 
 /* 玻璃拟态卡片通用样式 */
 .glass-card {
-  background: rgba(28,28,32,0.6);
+  background: var(--bg-card, rgba(28,28,32,0.6));
   backdrop-filter: blur(40px) saturate(180%);
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
   border-radius: 16px;
 }
 
