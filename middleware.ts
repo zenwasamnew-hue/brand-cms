@@ -9,7 +9,7 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr';
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // Inject pathname into request headers so Server Components can read it
+  // Inject pathname into request headers for potential use in Server Components
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-pathname', pathname);
 

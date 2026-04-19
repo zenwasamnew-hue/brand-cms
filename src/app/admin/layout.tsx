@@ -28,8 +28,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         displayName = user.email.split('@')[0];
       }
     }
-  } catch {
-    // Supabase not configured – demo mode, show admin shell directly
+  } catch (err) {
+    // Only swallow the expected "Supabase not configured" error; re-throw others
+    if (!(err instanceof Error && err.message === 'Supabase not configured')) {
+      console.error('AdminLayout: unexpected Supabase error', err);
+    }
   }
 
   // Show admin shell if authenticated OR if Supabase is not configured (demo mode)

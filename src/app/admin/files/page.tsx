@@ -134,7 +134,7 @@ export default function FilesPage() {
       {ctxMenu && (
         <div style={{ position: 'fixed', top: ctxMenu.y, left: ctxMenu.x, zIndex: 9999, background: 'var(--bg-card)', backdropFilter: 'blur(20px)', border: '1px solid var(--border)', borderRadius: '10px', padding: '6px', boxShadow: '0 8px 30px rgba(0,0,0,0.3)', minWidth: '140px' }}>
           {[
-            { label: '📋 复制链接', action: () => { navigator.clipboard.writeText(ctxMenu.file.url); setCtxMenu(null); } },
+            { label: '📋 复制链接', action: async () => { try { await navigator.clipboard.writeText(ctxMenu.file.url); } catch { /* clipboard not available */ } setCtxMenu(null); } },
             { label: '⬇️ 下载', action: () => setCtxMenu(null) },
             { label: '🗑️ 删除', action: () => handleDelete(ctxMenu.file.id) },
           ].map((item) => (
