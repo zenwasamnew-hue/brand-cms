@@ -44,7 +44,7 @@ type MessagePreview = {
   id: string;
   name: string;
   email: string;
-  content: string;
+  body: string;
   status: string;
   created_at: string;
 };
@@ -63,7 +63,7 @@ export default async function DashboardPage() {
     { count: msgTotal },
     { count: msgUnread },
     { count: pageTotal },
-    { count: draftTotal },
+    ,
     { count: fileTotal },
     { data: rawMessages },
   ] = await Promise.all([
@@ -71,27 +71,28 @@ export default async function DashboardPage() {
     supabase.from('messages').select('*', { count: 'exact', head: true }),
     // 2. 未读留言数
     supabase.from('messages').select('*', { count: 'exact', head: true }).eq('status', 'unread'),
-    // 3. 页面总数
-    supabase.from('pages').select('*', { count: 'exact', head: true }),
-    // 4. 草稿（未发布）页面数，用于欢迎横幅副标题
-    supabase.from('pages').select('*', { count: 'exact', head: true }).eq('status', 'draft'),
+    // 3. 模块总数
+    supabase.from('modules').select('*', { count: 'exact', head: true }),
+    // 4. 占位（保持数组长度一致）
+    supabase.from('messages').select('*', { count: 'exact', head: true }).eq('status', 'unread'),
     // 5. 文件总数
     supabase.from('files').select('*', { count: 'exact', head: true }),
     // 6. 最新 5 条留言（按创建时间倒序）
     supabase
       .from('messages')
-      .select('id, name, email, content, status, created_at')
+      .select('id, name, email, body, status, created_at')
       .order('created_at', { ascending: false })
       .limit(5),
   ]);
 
-  // 将查询结果合并为 KPI 数据映射（null 值回退为 0）
   const kpiData: Record<string, number> = {
     msgTotal:  msgTotal  ?? 0,
     msgUnread: msgUnread ?? 0,
     pageTotal: pageTotal ?? 0,
     fileTotal: fileTotal ?? 0,
   };
+
+  const draftTotal = null;
 
   // 类型转换：Supabase 返回的 any 数据转为精简留言类型
   const latestMessages = (rawMessages ?? []) as MessagePreview[];
@@ -369,7 +370,7 @@ export default async function DashboardPage() {
                         whiteSpace: 'nowrap',
                       }}
                     >
-                      {msg.content}
+                      {msg.body}
                     </p>
                   </div>
 

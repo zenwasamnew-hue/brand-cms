@@ -21,7 +21,7 @@ export default function LogoutButton() {
     await supabase.auth.signOut();
 
     // 跳转至登录页，并刷新路由缓存
-    router.push('/admin/login');
+    router.push('/login');
     router.refresh();
   }
 
