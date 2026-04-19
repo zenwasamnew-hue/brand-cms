@@ -52,3 +52,95 @@ html, body {
 }
 .btn-primary:hover { transform: translateY(-1px); }
 .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* ============================================================ */
+/* Theme System - CSS Variables                                   */
+/* ============================================================ */
+[data-theme="midnight"] {
+  --bg-base: #0a0a0f;
+  --bg-card: rgba(28,28,40,0.85);
+  --border: rgba(255,255,255,0.08);
+  --text-primary: #F5F5F7;
+  --text-secondary: #86868B;
+  --gradient-main: linear-gradient(135deg, #0A84FF 0%, #5E5CE6 100%);
+  --accent: #0A84FF;
+}
+[data-theme="silver"] {
+  --bg-base: #f0f0f5;
+  --bg-card: rgba(255,255,255,0.85);
+  --border: rgba(0,0,0,0.08);
+  --text-primary: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --gradient-main: linear-gradient(135deg, #0A84FF 0%, #5E5CE6 100%);
+  --accent: #0A84FF;
+}
+[data-theme="space-gray"] {
+  --bg-base: #1c1c1e;
+  --bg-card: rgba(44,44,46,0.85);
+  --border: rgba(255,255,255,0.1);
+  --text-primary: #F5F5F7;
+  --text-secondary: #98989D;
+  --gradient-main: linear-gradient(135deg, #636366 0%, #3A3A3C 100%);
+  --accent: #636366;
+}
+[data-theme="matrix"] {
+  --bg-base: #000;
+  --bg-card: rgba(0,20,0,0.85);
+  --border: rgba(0,255,65,0.15);
+  --text-primary: #00FF41;
+  --text-secondary: rgba(0,255,65,0.6);
+  --gradient-main: linear-gradient(135deg, #00FF41 0%, #00b32d 100%);
+  --accent: #00FF41;
+}
+[data-theme="sunset"] {
+  --bg-base: #1a0a00;
+  --bg-card: rgba(40,20,0,0.85);
+  --border: rgba(255,159,10,0.2);
+  --text-primary: #F5F5F7;
+  --text-secondary: rgba(255,159,10,0.7);
+  --gradient-main: linear-gradient(135deg, #FF9F0A 0%, #FF3B30 100%);
+  --accent: #FF9F0A;
+}
+[data-theme="aurora"] {
+  --bg-base: #050015;
+  --bg-card: rgba(10,0,30,0.85);
+  --border: rgba(191,90,242,0.2);
+  --text-primary: #F5F5F7;
+  --text-secondary: rgba(191,90,242,0.7);
+  --gradient-main: linear-gradient(135deg, #BF5AF2 0%, #30B0C7 100%);
+  --accent: #BF5AF2;
+}
+
+/* Themed glass card */
+.theme-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+/* Nav tooltip via CSS */
+.nav-item-wrap { position: relative; }
+.nav-tooltip {
+  pointer-events: none;
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  border-radius: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 999;
+}
+.nav-item-wrap:hover .nav-tooltip { opacity: 1; }
+
+.nav-link-hover:hover {
+  background: rgba(255,255,255,0.08) !important;
+}
