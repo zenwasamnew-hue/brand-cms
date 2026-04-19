@@ -11,6 +11,14 @@ const kpiConfig = [
   { icon: '🖼️', key: 'fileTotal' as const, href: '/admin/files',    color: '#5E5CE6' },
 ];
 
+function getGreeting(t: ReturnType<typeof useLang>['t']): string {
+  const hour = new Date().getHours();
+  if (hour >= 5  && hour < 12) return t.dashboard.greeting_morning;
+  if (hour >= 12 && hour < 18) return t.dashboard.greeting_afternoon;
+  if (hour >= 18 && hour < 23) return t.dashboard.greeting_evening;
+  return t.dashboard.greeting_night;
+}
+
 export default function DashboardPage() {
   const { t } = useLang();
 
@@ -33,7 +41,7 @@ export default function DashboardPage() {
       {/* Welcome banner */}
       <div className="theme-card" style={{ background: 'linear-gradient(135deg,rgba(10,132,255,0.15) 0%,rgba(94,92,230,0.15) 100%)', padding: '24px 28px', marginBottom: '20px' }}>
         <h2 style={{ fontSize: '24px', fontWeight: 800, margin: '0 0 8px', background: 'var(--gradient-main)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-          {t.dashboard.greeting_morning}，Admin 👋
+          {getGreeting(t)}，Admin 👋
         </h2>
         <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: 0 }}>
           {mockKpi.msgUnread > 0 ? `🔔 ${mockKpi.msgUnread} ${t.dashboard.kpi_unread}` : `✨ ${t.dashboard.running_well}`}

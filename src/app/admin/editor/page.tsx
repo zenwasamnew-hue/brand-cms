@@ -44,13 +44,26 @@ export default function EditorPage() {
     setTimeout(() => setSaved(false), 2000);
   }
 
-  function renderPreview(md: string) {
-    return md
+  /** Sanitize a string to prevent XSS before inserting via dangerouslySetInnerHTML */
+  function escapeHtml(str: string): string {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  /** Render simple Markdown to safe HTML (admin-only content, sanitized) */
+  function renderPreview(md: string): string {
+    // Escape first, then apply Markdown transformations on the safe text
+    const safe = escapeHtml(md);
+    return safe
       .replace(/^# (.+)$/gm, '<h1 style="font-size:24px;font-weight:800;margin:0 0 12px">$1</h1>')
       .replace(/^## (.+)$/gm, '<h2 style="font-size:18px;font-weight:700;margin:16px 0 8px">$1</h2>')
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
       .replace(/^- (.+)$/gm, '<li style="margin:4px 0;padding-left:8px">$1</li>')
-      .replace(/\n\n/g, '<br/><br/>');
+      .replace(/\n\n/g, '<br/>');
   }
 
   return (
